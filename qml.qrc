@@ -1,0 +1,23 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>MainForm.ui.qml</file>
+        <file>TextBrower.qml</file>
+        <file>ChatTools.qml</file>
+        <file>UserList.qml</file>
+        <file>Chat.qml</file>
+        <file>MyTextEdit.qml</file>
+        <file>WindowFramTool.qml</file>
+        <file>WindowTitle.qml</file>
+        <file>Login.qml</file>
+        <file>LoginSuccess.qml</file>
+    </qresource>
+    <qresource prefix="/Img">
+        <file>Images/background.png</file>
+        <file>Images/closeWindow.png</file>
+        <file>Images/colorDialog.png</file>
+        <file>Images/miniWindow.png</file>
+        <file>Images/setWindow.png</file>
+        <file>Images/logo.png</file>
+    </qresource>
+</RCC>
