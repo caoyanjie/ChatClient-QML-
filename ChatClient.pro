@@ -1,6 +1,7 @@
 TEMPLATE = app
 
 QT += qml quick widgets
+QT += network
 
 SOURCES += main.cpp \
     network.cpp
@@ -12,7 +13,7 @@ QML_IMPORT_PATH =
 
 # Default rules for deployment.
 include(deployment.pri)
-RC_ICONS = icon.ico
+RC_ICONS = logo.ico
 
 HEADERS += \
     network.h

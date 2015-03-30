@@ -11,6 +11,7 @@
         <file>WindowTitle.qml</file>
         <file>Login.qml</file>
         <file>LoginSuccess.qml</file>
+        <file>CustomTextInput.qml</file>
     </qresource>
     <qresource prefix="/Img">
         <file>Images/background.png</file>
@@ -19,5 +20,6 @@
         <file>Images/miniWindow.png</file>
         <file>Images/setWindow.png</file>
         <file>Images/logo.png</file>
+        <file>Images/waterfall.gif</file>
     </qresource>
 </RCC>

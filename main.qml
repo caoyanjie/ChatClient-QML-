@@ -6,9 +6,11 @@ import QtCPlusPlus.Network 1.0
 
 ApplicationWindow {
     id: root
-    title: qsTr("聊天")
-    width: 750
-    height: 480
+//    title: qsTr("聊天")
+    signal switchLoginSuccess
+
+    width: 500
+    height: 300
     visible: true
     flags: Qt.Window + Qt.FramelessWindowHint + Qt.WindowMinMaxButtonsHint
 
@@ -28,56 +30,16 @@ ApplicationWindow {
 
     //登录界面
     Login {
-
+        id: login
+        onLoginSuccess: switchLoginSuccess()
     }
 
-    //backgroundImage
-    Image {
-        source: "/Img/Images/background.png"
-        anchors.fill: parent
+    //登录成功跳转
+    onSwitchLoginSuccess: {
+        root.width = 750
+        root.height = 480
+        Qt.createComponent("LoginSuccess.qml").createObject(root)
+        login.destroy()
     }
 
-    //WindowTitle
-    WindowTitle {
-        id: id_windowTitle
-        anchors {left: parent.left; top: parent.top; right: parent.right}
-        height: 25;
-        onCloseWindow:  root.close()
-        onMiniWindow: root.showMinimized()
-//        onSetWindow:
-
-        Text {
-            id: windowState
-            text: "当前无对话"
-            color: "white"
-            anchors {verticalCenter: parent.verticalCenter}
-            Component.onCompleted: {
-                windowState.x = id_containerLeft.x + (windowState.width - id_containerLeft.width)
-                console.log()
-            }
-        }
-    }
-
-    //WindowContent
-    Item {
-        id: id_chatCount
-        anchors {left: parent.left; right: parent.right; top: id_windowTitle.bottom; bottom: parent.bottom}
-
-        Chat {
-            id: id_containerLeft
-            width: parent.width - 220
-            height: parent.height
-            anchors {left: parent.left; top: parent.top; bottom: parent.bottom; leftMargin: 5; topMargin: 5; bottomMargin: 5; rightMargin: 15}
-        }
-
-        UserList {
-            id: id_userList
-            anchors {left: id_containerLeft.right; top: parent.top; bottom: parent.bottom; right: parent.right; leftMargin: 15; topMargin: 5; bottomMargin: 5; rightMargin: 5}
-        }
-    }
-
-    //Network
-    Network {
-
-    }
 }

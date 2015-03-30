@@ -1,9 +1,15 @@
 import QtQuick 2.0
 
 Rectangle {
+    anchors {left: parent.left; top: parent.top; right: parent.right}
+    height: 25;
+
     signal closeWindow
     signal miniWindow
     signal setWindow
+
+    onCloseWindow:  root.close()
+    onMiniWindow: root.showMinimized()
 
     color: Qt.rgba(0, 0, 0, 0.5)
 
@@ -33,6 +39,6 @@ Rectangle {
         id: id_setWindow
         toolName: "setWindow"
         anchors {top: parent.top; right: id_miniWindow.left; margins: 5}
-        onButtonClicked: miniWindow()
+        onButtonClicked: setWindow()
     }
 }
