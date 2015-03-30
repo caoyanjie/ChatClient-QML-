@@ -9,8 +9,20 @@ Item {
     signal loginSuccess
 
     function checkLogin(userName, password){
-        if (true) {
-            loginSuccess()
+        if (userName == "") {
+            loginStatus.text = "用户名不能为空！"
+        }
+        else if (password == "") {
+            loginStatus.text = "密码不能为空！"
+        }
+        else if (false) {
+            loginStatus.text = "用户名不存在，请注册！"
+        }
+        else if (false) {
+            loginStatus.text = "密码错误！"
+        }
+        else if (true){
+                loginSuccess()
         }
     }
 
@@ -83,6 +95,11 @@ Item {
             Button {
                 text: "注册"
             }
+        }
+
+        Text {
+            id: loginStatus
+            color: "red"
         }
     }
 }

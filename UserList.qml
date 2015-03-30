@@ -17,34 +17,23 @@ Rectangle {
 
     ListView {
         id: userName
-        anchors {left: parent.left; top: userListTitle.bottom; right: userList.right; margins: 5}
+        anchors {left: parent.left; right: userList.right; top: userListTitle.bottom; margins: 5}
 
         delegate: Item {
-            id: user
-//            width: userList.width
-            height: 20
-//            color: Qt.rgba(0, 0, 0, 0)
-            /*
-            MouseArea {
-                anchors.fill: parent
-                hoverEnabled: true
-                onHoveredChanged: {
-                    user.color = Qt.rgba(0, 0, 0, 0.4)
-                }
-                onExited: {
-                    user.color = Qt.rgba(0, 0, 0, 0)
-                }
-            }*/
+            id: userItem
+            anchors {left: parent.left; right: parent.right; top: parent.top; margins: 5}
+            height: 30
+
             Image {
                 id: userHead
-                width: 20
-                height: 20
-                anchors {left: parnet.left; }
-                source: "Img/Images/manLogo.png"
+                width: 25
+                height: 25
+                anchors {left: parent.left}
+                source: "Img/Images/manLogo4.png"
             }
 
             Text {
-                anchors {left: userHead.right; verticalCenter: parent.verticalCenter}
+                anchors {left: userHead.right; verticalCenter: parent.verticalCenter; margins: 5}
                 text: name
                 color: "white"
             }

@@ -22,5 +22,9 @@
         <file>Images/waterfall.gif</file>
         <file>Images/manLogo.png</file>
         <file>Images/womanLogo.png</file>
+        <file>Images/manLogo1.png</file>
+        <file>Images/manLogo2.png</file>
+        <file>Images/manLogo3.png</file>
+        <file>Images/manLogo4.png</file>
     </qresource>
 </RCC>
