@@ -3,7 +3,6 @@ import QtQuick.Controls 1.2
 
 Rectangle {
     id: root
-//    border {width: 1; color: "lightblue"}
     color: Qt.rgba(0, 0, 0, 0.4)
 
     //
@@ -11,7 +10,7 @@ Rectangle {
         id: textBrower
         width: parent.width
         anchors {bottom: chatTools.top; top: parent.top; bottomMargin: 5}
-        color: Qt.rgba(0, 0, 0, 0.4)
+        color: Qt.rgba(0, 0, 0, 0.2)
     }
 
     //工具条

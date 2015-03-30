@@ -46,7 +46,9 @@ Item {
     //Network
     Network {
         id: network
-        Component.onCompleted: network.initNetwork()
+        Component.onCompleted: {
+            console.log(network.udpBroadcast())
+        }
     }
 }
 

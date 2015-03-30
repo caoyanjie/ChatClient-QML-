@@ -6,7 +6,6 @@ import QtCPlusPlus.Network 1.0
 
 ApplicationWindow {
     id: root
-//    title: qsTr("聊天")
     signal switchLoginSuccess
 
     width: 500
@@ -17,11 +16,9 @@ ApplicationWindow {
     MouseArea {
         anchors.fill: parent
         property point clickedPos: "0, 0"
-
         onPressed: {
             clickedPos = Qt.point(mouse.x, mouse.y)
         }
-
         onPositionChanged: {
             root.setX(root.x + (mouse.x-clickedPos.x))
             root.setY(root.y + (mouse.y-clickedPos.y))
@@ -38,8 +35,7 @@ ApplicationWindow {
     onSwitchLoginSuccess: {
         root.width = 750
         root.height = 480
-        Qt.createComponent("LoginSuccess.qml").createObject(root)
         login.destroy()
+        Qt.createComponent("LoginSuccess.qml").createObject(root)
     }
-
 }
