@@ -11,7 +11,6 @@
         <file>WindowTitle.qml</file>
         <file>Login.qml</file>
         <file>LoginSuccess.qml</file>
-        <file>CustomTextInput.qml</file>
     </qresource>
     <qresource prefix="/Img">
         <file>Images/background.png</file>
