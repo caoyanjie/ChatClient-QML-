@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.2
+import QtQuick.Controls.Styles 1.2
 
 Item {
     width: parent.width
@@ -46,8 +47,16 @@ Item {
                 text: "用户名："
                 color: "white"
             }
-            CustomTextInput {
+            TextField {
                 id: user
+                height: 20
+                style: TextFieldStyle {
+                    textColor: "white"
+                    background: Rectangle{
+                        border {width: 1; color: "white"}
+                        color: Qt.rgba(0, 0, 0, 0)
+                    }
+                }
             }
         }
         Row {
@@ -56,8 +65,11 @@ Item {
                 text: "密  码："
                 color: "white"
             }
-            CustomTextInput {
+            TextField {
                 id: password
+                height: 20
+                style: user.style
+                echoMode: TextInput.Password
             }
         }
         Row {

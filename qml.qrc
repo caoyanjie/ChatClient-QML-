@@ -21,5 +21,7 @@
         <file>Images/setWindow.png</file>
         <file>Images/logo.png</file>
         <file>Images/waterfall.gif</file>
+        <file>Images/manLogo.png</file>
+        <file>Images/womanLogo.png</file>
     </qresource>
 </RCC>
