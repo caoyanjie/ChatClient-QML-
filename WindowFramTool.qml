@@ -6,8 +6,8 @@ ToolButton {
     property string toolName
     signal buttonClicked
 
-    width: 15
-    height: 15
+    width: 20
+    height: 20
 
     Image {
         width: 11

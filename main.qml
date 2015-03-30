@@ -45,6 +45,17 @@ ApplicationWindow {
         onCloseWindow:  root.close()
         onMiniWindow: root.showMinimized()
 //        onSetWindow:
+
+        Text {
+            id: windowState
+            text: "当前无对话"
+            color: "white"
+            anchors {verticalCenter: parent.verticalCenter}
+            Component.onCompleted: {
+                windowState.x = id_containerLeft.x + (windowState.width - id_containerLeft.width)
+                console.log()
+            }
+        }
     }
 
     //WindowContent
@@ -63,13 +74,6 @@ ApplicationWindow {
             id: id_userList
             anchors {left: id_containerLeft.right; top: parent.top; bottom: parent.bottom; right: parent.right; leftMargin: 15; topMargin: 5; bottomMargin: 5; rightMargin: 5}
         }
-    }
-
-    Text {
-        id: windowState
-        text: "当前无对话"
-        color: "white"
-        anchors {horizontalCenter: id_containerLeft.horizontalCenter; verticalCenter: id_windowTitle.verticalCenter}
     }
 
     //Network
