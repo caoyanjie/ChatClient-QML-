@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>MainForm.ui.qml</file>
         <file>TextBrower.qml</file>
         <file>ChatTools.qml</file>
         <file>UserList.qml</file>

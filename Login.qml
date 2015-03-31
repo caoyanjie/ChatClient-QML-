@@ -6,8 +6,9 @@ Item {
     width: parent.width
     height: parent.height
 
-    signal loginSuccess
+    signal loginSuccess(string userName)
 
+    //验证登录
     function checkLogin(userName, password){
         if (userName == "") {
             loginStatus.text = "用户名不能为空！"
@@ -22,20 +23,23 @@ Item {
             loginStatus.text = "密码错误！"
         }
         else if (true){
-                loginSuccess()
+                loginSuccess(userName)
         }
     }
 
+    //动态背景
     AnimatedImage {
         anchors.fill: parent
         source: "Img/Images/waterfall.gif"
     }
 
+    //半透明底层
     Rectangle {
         anchors.fill: parent
         color: Qt.rgba(0, 0, 0, 0.4)
     }
 
+    //
     WindowTitle {
         Text {
             anchors.centerIn: parent
@@ -45,6 +49,7 @@ Item {
         }
     }
 
+    //
     Column {
         id: columnLayout
 

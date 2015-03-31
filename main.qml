@@ -6,7 +6,7 @@ import QtCPlusPlus.Network 1.0
 
 ApplicationWindow {
     id: root
-    signal switchLoginSuccess
+//    signal switchLoginSuccess(string userName)
 
     width: 500
     height: 300
@@ -25,17 +25,39 @@ ApplicationWindow {
         }
     }
 
+    //Network
+    Network {
+        id: network
+//        onReceivedMessage: processMessage(message)          //C++ 接收到网络数据，调用 JavaScript 函数处理数据
+//
+//        Component.onCompleted: {
+//            network.setUserName(loginUserName)              //登录用户名传送到C++，发送上线通知
+//        }
+    }
+
     //登录界面
     Login {
         id: login
-        onLoginSuccess: switchLoginSuccess()
-    }
 
-    //登录成功跳转
+        //切换到登录后界面
+        onLoginSuccess: {
+//            switchLoginSuccess(userName)
+            root.width = 750
+            root.height = 480
+            login.destroy()
+            var compenent = Qt.createComponent("LoginSuccess.qml").createObject(root)
+            network.setUserName(userName)                                   //登录用户名传送到C++，发送上线通知
+            network.receivedMessage.connect(compenent.processMessage)       //绑定network的信号到新创建的组件的信号上
+//            compenent.processMessage.connect(network.setUserName())
+        }
+    }
+/*
+    //登录成功跳转-
     onSwitchLoginSuccess: {
         root.width = 750
         root.height = 480
         login.destroy()
-        Qt.createComponent("LoginSuccess.qml").createObject(root)
-    }
+        var compenent = Qt.createComponent("LoginSuccess.qml").createObject(root)
+        compenent.test(userName)
+    }*/
 }

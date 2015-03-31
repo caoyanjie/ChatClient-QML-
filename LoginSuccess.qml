@@ -4,6 +4,20 @@ import QtCPlusPlus.Network 1.0
 Item {
     anchors.fill: parent
 
+    function processMessage(message) {
+//        console.log("ip： ", message[0])
+//        console.log("userName： ", message[1])
+//        console.log("strContent： ", message[2])
+        var usersIp
+        for (var index=0; index<id_userList.modelCount; ++index) {
+//            if (message[0] !== id_userList.model.get(index).name) {
+                console.log("hello9: ", id_userList.model.get(index).name)
+//                return
+//            }
+        }
+        id_userList.addUserToOnlineList(message[1], message[0])
+    }
+
     //backgroundImage
     Image {
         source: "Img/Images/background.png"
@@ -40,14 +54,6 @@ Item {
         UserList {
             id: id_userList
             anchors {left: id_containerLeft.right; top: parent.top; bottom: parent.bottom; right: parent.right; leftMargin: 15; topMargin: 5; bottomMargin: 5; rightMargin: 5}
-        }
-    }
-
-    //Network
-    Network {
-        id: network
-        Component.onCompleted: {
-            console.log(network.udpBroadcast())
         }
     }
 }
