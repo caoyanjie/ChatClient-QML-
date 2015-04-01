@@ -3,8 +3,8 @@ import QtCPlusPlus.Network 1.0
 
 Item {
     anchors.fill: parent
-    property string myName
-    signal onlineNotifyP2P(string destinationIp, string myName)
+//    property string myName
+    signal onlineNotifyP2P(string destinationIp)
 
     //处理接收的消息
     function processMessage(message) {
@@ -22,7 +22,7 @@ Item {
 
         //发现新用户，添加到在线列表，并给新用户一个回馈
         id_userList.addUserToOnlineList(message[1], message[0])
-        onlineNotifyP2P(message[0], myName)
+        onlineNotifyP2P(userIp)
     }
 
     //backgroundImage

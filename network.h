@@ -14,21 +14,21 @@ public:
 
 private:
     QUdpSocket *udpManager;
-    QString userName;
+    QString myUserName;
     int udpPort;
-    QString ip;
+    QString myIp;
 
 signals:
     void receivedMessage(QStringList message);
 
 public slots:
-    int udpBroadcast(QString senderData);
     void setUserName(QString name);
-    void sendUdp();
+    void sendUdp(QString chatContent, QString destinationIp = "");
     void receiveUdp();
     void sendTcp();
     void receiveTcp();
     void receiveUdpDatagram();
+
 };
 
 #endif // NETWORK_H

@@ -7,7 +7,7 @@
 Network::Network(QObject *parent) : QObject(parent)
     ,udpPort(45454)
 {
-    ip = "<ip:" + QNetworkInterface::allAddresses().at(1).toString() + ">";         //获得本机 ip
+    myIp = "<ip:" + QNetworkInterface::allAddresses().at(1).toString() + ">";       //获得本机 ip
     udpManager = new QUdpSocket(this);                                              //初始化 UDP
     udpManager->bind(udpPort, QUdpSocket::ShareAddress);                            //绑定端口号
     connect(udpManager, SIGNAL(readyRead()), this, SLOT(receiveUdpDatagram()));     //关联UDP数据接收数据
@@ -17,25 +17,32 @@ Network::~Network()
 {
 }
 
-//UDP 广播
-int Network::udpBroadcast(QString senderData)
-{
-    QString content = ip + userName + senderData;
-    QByteArray datagram;
-    datagram.append(content);
-    return udpManager->writeDatagram(datagram.data(), datagram.size(), QHostAddress::Broadcast, udpPort);
-}
-
 //设置用户名
 void Network::setUserName(QString name)
 {
-    userName = "<user:" + name + ">";
-    udpBroadcast("I'm in!");                //通知上线
+    myUserName = "<user:" + name + ">";
+    sendUdp("I'm in!");                //发送广播，通知上线
 }
 
-void Network::sendUdp()
+//发送 UDP 消息
+void Network::sendUdp(QString chatContent, QString destinationIp)
 {
-
+    //如果省略第二个参数，则发广播
+    QHostAddress destinationAddress;
+    if (destinationIp.isEmpty())
+    {
+        destinationAddress = QHostAddress::Broadcast;
+    }
+    else
+    {
+        destinationAddress.setAddress(destinationIp);
+    }
+    //构造数据
+    QString content = myIp + myUserName + chatContent;
+    QByteArray datagram;
+    datagram.append(content);
+    //发送数据
+    udpManager->writeDatagram(datagram.data(), datagram.size(), destinationAddress, udpPort);
 }
 
 void Network::receiveUdp()

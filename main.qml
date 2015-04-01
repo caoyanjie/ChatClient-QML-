@@ -45,8 +45,10 @@ ApplicationWindow {
             root.height = 480
             login.destroy()
             var compenent = Qt.createComponent("LoginSuccess.qml").createObject(root)
-            id_network.setUserName(userName)                                   //登录用户名传送到 C++，发送上线通知
-            id_network.receivedMessage.connect(compenent.processMessage)       //绑定 network 的信号到新创建的组件的信号上
+//            compenent.myName = userName
+            id_network.setUserName(userName)                                //调用 C++ 的槽函数，设置用户名并发送上线通知
+            id_network.receivedMessage.connect(compenent.processMessage)    //绑定 network 的信号到新创建的组件的信号上
+            compenent.onlineNotifyP2P.connect(id_network.sendUdp())         //绑定 新创建组件的“端对端通知上线”到 network 的槽函数上
         }
     }
 }
