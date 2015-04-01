@@ -83,12 +83,12 @@ Rectangle {
 
         //颜色
         ToolButton {
-            anchors {margins: 2}
+            anchors { margins: 2 }
             height: comboBox.height
             width: height
             Image {
                 anchors.centerIn: parent
-                source: "Images/colorDialog.png"
+                source: "Img/Images/colorDialog.png"
             }
         }
 

@@ -3,21 +3,26 @@ import QtCPlusPlus.Network 1.0
 
 Item {
     anchors.fill: parent
+    property string myName
+    signal onlineNotifyP2P(string destinationIp, string myName)
 
+    //处理接收的消息
     function processMessage(message) {
-//        console.log("ip： ", message[0])
-//        console.log("userName： ", message[1])
-//        console.log("strContent： ", message[2])
-//        var usersIp
+        var userIp = message[0]
+        var userName = message[1]
+        var chatContent = message[2]
+
+        //检测到是在线用户，显示消息
         for (var index=0; index<id_userList.modelCount; ++index) {
-//            if (message[0] !== id_userList.model.get(index).name) {
-                console.log("hello9: ", id_userList.model.get(index).name)
-//                return
-//            }
+            if (userIp === id_userList.model.get(index).name) {
+                console.log("对方发来消息", chatContent)
+                return
+            }
         }
+
         //发现新用户，添加到在线列表，并给新用户一个回馈
         id_userList.addUserToOnlineList(message[1], message[0])
-
+        onlineNotifyP2P(message[0], myName)
     }
 
     //backgroundImage
@@ -33,10 +38,9 @@ Item {
             id: windowState
             text: "当前无对话"
             color: "white"
-            anchors {verticalCenter: parent.verticalCenter}
+            anchors { verticalCenter: parent.verticalCenter }
             Component.onCompleted: {
                 windowState.x = id_containerLeft.x + (windowState.width - id_containerLeft.width)
-                console.log()
             }
         }
     }

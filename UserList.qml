@@ -4,7 +4,7 @@ import QtQuick.Controls 1.2
 Rectangle {
     id: userList
     property ListModel model: userList.model
-    property int modelCount: userList.model.count
+    property int modelCount: userListModel.count
     signal clickUser(string userName, string ip)
     color: Qt.rgba(0, 0, 0, 0.4)
     border {width: 1; color: "lightblue"}
