@@ -93,6 +93,7 @@ Item {
             spacing: columnLayout.rowSpacing
             Button {
                 text: "登录"
+
                 onClicked: {
                     checkLogin(user.text, password.text)
                 }

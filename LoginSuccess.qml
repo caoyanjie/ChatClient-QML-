@@ -2,27 +2,38 @@ import QtQuick 2.0
 import QtCPlusPlus.Network 1.0
 
 Item {
-    anchors.fill: parent
-//    property string myName
-    signal onlineNotifyP2P(string destinationIp)
+    id: id_root
 
-    //处理接收的消息
+    signal onlineNotifyP2P(string noticeContent, string destinationIp)
+    signal sendMessage(int type, string msgContent)
+    signal showMessageToScreen(string chatContent)
+
+    anchors.fill: parent
+
+    //处理接收的消息[类型 + ip + userName + chatContent]
     function processMessage(message) {
-        var userIp = message[0]
-        var userName = message[1]
-        var chatContent = message[2]
+        var type = message[0]
+        var userIp = message[1]
+        var userName = message[2]
+        var chatContent = message[3]
+        var time = message[4]
 
         //检测到是在线用户，显示消息
         for (var index=0; index<id_userList.modelCount; ++index) {
-            if (userIp === id_userList.model.get(index).name) {
-                console.log("对方发来消息", chatContent)
-                return
+            if (userIp === id_userList.getUserListIp(index)) {
+                if (chatContent == null || chatContent == "") {
+                    return
+                }
+                else {
+                    id_containerLeft.showMessage(chatContent, time)
+                    return
+                }
             }
         }
 
         //发现新用户，添加到在线列表，并给新用户一个回馈
-        id_userList.addUserToOnlineList(message[1], message[0])
-        onlineNotifyP2P(userIp)
+        id_userList.addUserToOnlineList(userName, userIp)       //将新上线用户添加到 ListView 列表
+        onlineNotifyP2P(1, "", userIp)
     }
 
     //backgroundImage
@@ -55,6 +66,9 @@ Item {
             width: parent.width - 220
             height: parent.height
             anchors {left: parent.left; top: parent.top; bottom: parent.bottom; leftMargin: 5; topMargin: 5; bottomMargin: 5; rightMargin: 15}
+            onSendMessage: {
+                id_root.sendMessage(0, msg)
+            }
         }
 
         UserList {
@@ -63,4 +77,3 @@ Item {
         }
     }
 }
-

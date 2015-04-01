@@ -6,12 +6,21 @@ Rectangle {
     property ListModel model: userList.model
     property int modelCount: userListModel.count
     signal clickUser(string userName, string ip)
+
     color: Qt.rgba(0, 0, 0, 0.4)
     border {width: 1; color: "lightblue"}
 
     //添加在线用户
     function addUserToOnlineList(userName, userIp) {
         userListModel.append({"name": userName, "ip": userIp})
+    }
+
+    //获取某在线用户 IP
+    function getUserListIp(index) {
+        if (userListModel.count<=0 || index<0 || index>userListModel.count) {
+            return null
+        }
+        return userListModel.get(index).ip
     }
 
     //
@@ -62,19 +71,7 @@ Rectangle {
             }
         }
 
-        model: ListModel {
-            id: userListModel
-            ListElement {
-                name: "曹延杰"
-                ip: "192.168.1.100"
-            }
-            ListElement {
-                name: "Test"
-                ip: "192.168.1.100"
-            }
-        }
-
-        Component.onCompleted: {userListModel.clear()}
+        model: ListModel { id: userListModel }
     }
 }
 

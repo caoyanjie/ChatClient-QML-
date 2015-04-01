@@ -5,6 +5,15 @@
 
 #include <QUdpSocket>
 
+//枚举：发送数据的类型
+typedef enum MessageType {
+    Message,
+    NewParticipant,
+    ParticipantLeft,
+    FileName,
+    Refuse
+}MessageType;
+
 class Network : public QObject
 {
     Q_OBJECT
@@ -22,8 +31,8 @@ signals:
     void receivedMessage(QStringList message);
 
 public slots:
-    void setUserName(QString name);
-    void sendUdp(QString chatContent, QString destinationIp = "");
+    void setUserName(QString userName);
+    void sendUdp(int messageType, QString chatContent = "", QString destinationIp = "");
     void receiveUdp();
     void sendTcp();
     void receiveTcp();

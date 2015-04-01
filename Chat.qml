@@ -3,6 +3,14 @@ import QtQuick.Controls 1.2
 
 Rectangle {
     id: root
+    signal sendMessage(string msg)
+
+    //显示接收到的消息到聊天窗口
+    function showMessage(chatContent, time) {
+        var result = "[用户名] " + time + "\n" + chatContent + "\n"
+        textBrower.text += result
+    }
+
     color: Qt.rgba(0, 0, 0, 0.4)
 
     //
@@ -36,5 +44,14 @@ Rectangle {
         id: btnSendMsg
         text: qsTr("发送")
         anchors {right: parent.right; bottom: parent.bottom; topMargin: 5; bottomMargin: 5; rightMargin: 5}
+        onClicked: {
+            if (textArea.text == "") {
+                console.log("消息不能为空")
+            }
+            else {
+                sendMessage(textArea.text)
+                textArea.text = ""
+            }
+        }
     }
 }
