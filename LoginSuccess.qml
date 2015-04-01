@@ -8,14 +8,16 @@ Item {
 //        console.log("ip： ", message[0])
 //        console.log("userName： ", message[1])
 //        console.log("strContent： ", message[2])
-        var usersIp
+//        var usersIp
         for (var index=0; index<id_userList.modelCount; ++index) {
 //            if (message[0] !== id_userList.model.get(index).name) {
                 console.log("hello9: ", id_userList.model.get(index).name)
 //                return
 //            }
         }
+        //发现新用户，添加到在线列表，并给新用户一个回馈
         id_userList.addUserToOnlineList(message[1], message[0])
+
     }
 
     //backgroundImage

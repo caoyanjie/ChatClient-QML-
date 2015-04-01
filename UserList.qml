@@ -31,8 +31,8 @@ Rectangle {
     ListView {
         id: userNameList
         anchors {left: parent.left; right: parent.right; top: userListTitle.bottom; margins: 5}
-//        spacing: 10
         height: 400
+
         delegate: Rectangle {
             id: userItem
             width: parent.width
@@ -65,29 +65,16 @@ Rectangle {
         model: ListModel {
             id: userListModel
             ListElement {
-                name : "曹延杰"
-                ip : "192.168.1.100"
+                name: "曹延杰"
+                ip: "192.168.1.100"
             }
             ListElement {
-                name : "da"
-                ip : "192.168.1.100"
+                name: "Test"
+                ip: "192.168.1.100"
             }
         }
 
-//        highlight: Rectangle {
-//            width: 180
-//            height: 4
-//            color: Qt.rgba(255, 255, 255, 0.3)
-//            radius: 5
-//            y: userNameList.currentItem.y
-//            Behavior on y {
-//                SpringAnimation {
-//                    spring: 3
-//                    damping: 0.2
-//                }
-//            }
-//        }
-        highlightFollowsCurrentItem: true
+        Component.onCompleted: {userListModel.clear()}
     }
 }
 
