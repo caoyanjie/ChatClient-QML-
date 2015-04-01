@@ -25,7 +25,7 @@ Item {
                     return
                 }
                 else {
-                    id_containerLeft.showMessage(chatContent, time)
+                    id_containerLeft.showMessage(userName, chatContent, time)
                     return
                 }
             }

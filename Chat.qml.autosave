@@ -7,7 +7,7 @@ Rectangle {
 
     //显示接收到的消息到聊天窗口
     function showMessage(userName, chatContent, time) {
-        var result = "【" + userName + "】 " + time + "\n" + chatContent + "\n"
+        var result = "[" + userName + "] " + time + "\n" + chatContent + "\n"
         textBrower.text += result
     }
 
