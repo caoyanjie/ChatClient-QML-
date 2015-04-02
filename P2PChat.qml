@@ -20,6 +20,8 @@ P2P {
 Dialog {
     id: filledDialog
     property string destinationIp: chat.destinationIp
+    signal sendP2PMessage(string destinationIp, string chatContent)
+
     visible: true
     modality: Qt.WindowModal
  //   flag: Qt.FramelessWindowHint
@@ -36,6 +38,10 @@ Dialog {
             id: chat
             anchors.fill: parent
             destinationIp: filledDialog.destinationIp
+
+            onSendP2PMessage: {
+                filledDialog.sendP2PMessage(ip, msg)
+            }
         }
     }
 }

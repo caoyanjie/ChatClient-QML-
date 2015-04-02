@@ -6,6 +6,7 @@ Rectangle {
     property ListModel model: userList.model
     property int modelCount: userListModel.count
     signal clickUser(string userName, string ip)
+    signal sendP2PMessage(string destinationIp, string chatContent)
 
     color: Qt.rgba(0, 0, 0, 0.4)
     border {width: 1; color: "lightblue"}
@@ -69,6 +70,7 @@ Rectangle {
                     console.log("私聊模式已开启！")
                     var component = Qt.createComponent("P2PChat.qml").createObject(0)
                     component.destinationIp = model.ip          //userListModel.ip是得不到对应ip的
+                    component.sendP2PMessage.connect(userList.sendP2PMessage)
                 }
             }
         }

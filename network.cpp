@@ -81,7 +81,7 @@ void Network::receiveUdpDatagram()
         QDataStream in(&datagram, QIODevice::ReadOnly);
         in >> messageType >> ip >> userName >> chatContent;
 
-        QString time = QDateTime::currentDateTime().toString("yyyy-MM-d hh:mm:ss");
+        QString time = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
 
         QStringList udpData;
         udpData.append(tr("%1").arg(messageType));      //类型

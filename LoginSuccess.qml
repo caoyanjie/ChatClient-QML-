@@ -70,15 +70,18 @@ Item {
             onSendBroadcastMessage: {console.log("我已经发出去了端对端的消息呀")
                 id_root.sendBroadcastMessage(0, msg)
             }
-            onSendP2PMessage: {
-                console.log("我已经发出去了端对端的消息呀")
-                id_root.sendP2PMessage(0, msg, ip)
-            }
+//            onSendP2PMessage: {
+//                console.log("我已经发出去了端对端的消息呀")
+//                id_root.sendP2PMessage(0, msg, ip)
+//            }
         }
 
         UserList {
             id: id_userList
             anchors {left: id_containerLeft.right; top: parent.top; bottom: parent.bottom; right: parent.right; leftMargin: 15; topMargin: 5; bottomMargin: 5; rightMargin: 5}
+            onSendP2PMessage: {
+                id_root.sendP2PMessage(0, chatContent, destinationIp)
+            }
         }
     }
 }

@@ -55,7 +55,11 @@ Rectangle {
                 textArea.remove(0, textArea.length)             //消息发出后，清空输入框文字
             }
             else {
-                sendP2PMessage(destinationIp, textArea.text)    //发送端对端（私聊）
+                var sendText = textArea.getText(0, textArea.length)
+                var date = new Date()
+                var time = date.toLocaleString(Qt.locale(), "yyyy-MM-dd hh:mm:ss")
+                textBrower.text += "[我] " + time + "\n" + sendText + "\n\n"
+                sendP2PMessage(destinationIp, sendText)    //发送端对端（私聊）
                 textArea.remove(0, textArea.length)             //消息发出后，清空输入框文字
             }
         }
