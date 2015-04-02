@@ -44,7 +44,8 @@ ApplicationWindow {
             id_network.setUserName(userName)                                //调用 C++ 的槽函数，设置用户名并发送上线通知
             id_network.receivedMessage.connect(compenent.processMessage)    //绑定 network 的信号到新创建的组件的信号上
             compenent.onlineNotifyP2P.connect(id_network.sendUdp)           //绑定 新创建组件的“端对端通知上线”到 network 的槽函数上
-            compenent.sendMessage.connect(id_network.sendUdp)
+            compenent.sendBroadcastMessage.connect(id_network.sendUdp)      //发送广播消息（群聊）
+            compenent.sendP2PMessage.connect(id_network.sendUdp)            //发送端到端消息（私聊）
         }
     }
 }

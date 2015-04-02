@@ -33,10 +33,12 @@ void Network::sendUdp(int messageType, QString chatContent, QString destinationI
     if (destinationIp.isEmpty())
     {
         destinationAddress = QHostAddress::Broadcast;
+        qDebug() << "现在发送的是广播" << chatContent;
     }
     else
     {
         destinationAddress.setAddress(destinationIp);
+        qDebug() << tr("现在发送的是P2P<%1>: %2").arg(destinationIp).arg(chatContent);
     }
 
     //构造数据[类型，IP，字符串]

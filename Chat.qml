@@ -3,11 +3,13 @@ import QtQuick.Controls 1.2
 
 Rectangle {
     id: root
-    signal sendMessage(string msg)
+    property string destinationIp: ""
+    signal sendBroadcastMessage(string msg)
+    signal sendP2PMessage(string ip, string msg)
 
     //显示接收到的消息到聊天窗口
     function showMessage(userName, chatContent, time) {
-        var result = "【" + userName + "】 " + time + "\n" + chatContent + "\n"
+        var result = "[" + userName + "] " + time + "\n" + chatContent + "\n\n"
         textBrower.text += result
     }
 
@@ -46,11 +48,15 @@ Rectangle {
         anchors {right: parent.right; bottom: parent.bottom; topMargin: 5; bottomMargin: 5; rightMargin: 5}
         onClicked: {
             if (textArea.text == "") {
-                console.log("消息不能为空")
+                console.log("消息不能为空")                       //不能发送空消息
+            }
+            else if (destinationIp == "") {
+                sendBroadcastMessage(textArea.text)             //发送广播（群聊）
+                textArea.remove(0, textArea.length)             //消息发出后，清空输入框文字
             }
             else {
-                sendMessage(textArea.text)
-                textArea.text = ""
+                sendP2PMessage(destinationIp, textArea.text)    //发送端对端（私聊）
+                textArea.remove(0, textArea.length)             //消息发出后，清空输入框文字
             }
         }
     }

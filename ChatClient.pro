@@ -4,7 +4,8 @@ QT += qml quick widgets
 QT += network
 
 SOURCES += main.cpp \
-    network.cpp
+    network.cpp \
+    p2p.cpp
 
 RESOURCES += qml.qrc
 
@@ -16,4 +17,5 @@ include(deployment.pri)
 RC_ICONS = logo.ico
 
 HEADERS += \
-    network.h
+    network.h \
+    p2p.h

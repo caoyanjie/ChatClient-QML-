@@ -66,6 +66,7 @@ Item {
             }
             TextField {
                 id: user
+                focus: true
                 height: 20
                 style: TextFieldStyle {
                     textColor: "white"
@@ -92,8 +93,9 @@ Item {
         Row {
             spacing: columnLayout.rowSpacing
             Button {
+                focus: true
                 text: "登录"
-
+                Keys.onReturnPressed: clicked()
                 onClicked: {
                     checkLogin(user.text, password.text)
                 }

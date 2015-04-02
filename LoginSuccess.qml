@@ -5,7 +5,8 @@ Item {
     id: id_root
 
     signal onlineNotifyP2P(string noticeContent, string destinationIp)
-    signal sendMessage(int type, string msgContent)
+    signal sendBroadcastMessage(int type, string msgContent)
+    signal sendP2PMessage(int type, string msgContent, string destinationIp)
     signal showMessageToScreen(string chatContent)
 
     anchors.fill: parent
@@ -66,8 +67,12 @@ Item {
             width: parent.width - 220
             height: parent.height
             anchors {left: parent.left; top: parent.top; bottom: parent.bottom; leftMargin: 5; topMargin: 5; bottomMargin: 5; rightMargin: 15}
-            onSendMessage: {
-                id_root.sendMessage(0, msg)
+            onSendBroadcastMessage: {console.log("我已经发出去了端对端的消息呀")
+                id_root.sendBroadcastMessage(0, msg)
+            }
+            onSendP2PMessage: {
+                console.log("我已经发出去了端对端的消息呀")
+                id_root.sendP2PMessage(0, msg, ip)
             }
         }
 
