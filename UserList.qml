@@ -67,7 +67,6 @@ Rectangle {
 
                 //双击用户，进入私聊
                 onDoubleClicked: {
-                    console.log("私聊模式已开启！")
                     var component = Qt.createComponent("P2PChat.qml").createObject(0)
                     component.destinationIp = model.ip          //userListModel.ip是得不到对应ip的
                     component.sendP2PMessage.connect(userList.sendP2PMessage)

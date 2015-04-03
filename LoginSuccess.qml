@@ -60,14 +60,14 @@ Item {
     //WindowContent
     Item {
         id: id_chatCount
-        anchors {left: parent.left; right: parent.right; top: id_windowTitle.bottom; bottom: parent.bottom}
+        anchors { left: parent.left; right: parent.right; top: id_windowTitle.bottom; bottom: parent.bottom }
 
         Chat {
             id: id_containerLeft
             width: parent.width - 220
             height: parent.height
             anchors {left: parent.left; top: parent.top; bottom: parent.bottom; leftMargin: 5; topMargin: 5; bottomMargin: 5; rightMargin: 15}
-            onSendBroadcastMessage: {console.log("我已经发出去了端对端的消息呀")
+            onSendBroadcastMessage: {
                 id_root.sendBroadcastMessage(0, msg)
             }
 //            onSendP2PMessage: {
@@ -78,7 +78,7 @@ Item {
 
         UserList {
             id: id_userList
-            anchors {left: id_containerLeft.right; top: parent.top; bottom: parent.bottom; right: parent.right; leftMargin: 15; topMargin: 5; bottomMargin: 5; rightMargin: 5}
+            anchors { left: id_containerLeft.right; top: parent.top; bottom: parent.bottom; right: parent.right; leftMargin: 15; topMargin: 5; bottomMargin: 5; rightMargin: 5 }
             onSendP2PMessage: {
                 id_root.sendP2PMessage(0, chatContent, destinationIp)
             }

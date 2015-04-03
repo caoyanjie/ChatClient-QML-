@@ -56,7 +56,7 @@ Item {
         property int rowSpacing: 20
 
         spacing: 30
-        anchors {centerIn: parent}
+        anchors { centerIn: parent }
 
         Row {
             spacing: columnLayout.rowSpacing
