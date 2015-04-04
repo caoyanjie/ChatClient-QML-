@@ -11,17 +11,40 @@ Rectangle {
     color: Qt.rgba(0, 0, 0, 0.4)
     border {width: 1; color: "lightblue"}
 
-    //添加在线用户
+    //用户上线
     function addUserToOnlineList(userName, userIp) {
         userListModel.append({"name": userName, "ip": userIp})
     }
 
-    //获取某在线用户 IP
-    function getUserListIp(index) {
+    //检测用户是否存在
+    function userExist (userIp, userName) {
+        var userMessage
+        for (var index=0; index<userListModel.count; ++index) {
+            userMessage = getUserListIp(index)
+            if (userMessage.at(0) === userIp && userMessage.at(1) === userName) {
+                return index
+            }
+        }
+        return -1
+    }
+
+    //获取某在线用户 IP, userName
+    function getUserListMessage(index) {
         if (userListModel.count<=0 || index<0 || index>userListModel.count) {
             return null
         }
-        return userListModel.get(index).ip
+        var userIpAndName = new Array()
+        userIpAndName.push(userListModel.get(index).ip)
+        userIpAndName.push(userListModel.get(index).name)
+        return userIpAndName
+    }
+
+    //用户下线
+    function userLeft(userIp, userName) {
+        var index = userExist(userIp, userName)
+        if (-1 !== index) {
+            userListModel.remove(index)
+        }
     }
 
     //
@@ -69,6 +92,7 @@ Rectangle {
                 onDoubleClicked: {
                     var component = Qt.createComponent("P2PChat.qml").createObject(0)
                     component.destinationIp = model.ip          //userListModel.ip是得不到对应ip的
+                    component.friendName = model.name
                     component.sendP2PMessage.connect(userList.sendP2PMessage)
                 }
             }

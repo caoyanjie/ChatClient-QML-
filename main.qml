@@ -9,8 +9,10 @@ ApplicationWindow {
 
     property alias id_network: id_network
 
-    width: 500
-    height: 300
+//    width: 500
+//    height: 300
+    width: 510
+    height: 350
     visible: true
     flags: Qt.Window + Qt.FramelessWindowHint + Qt.WindowMinMaxButtonsHint
 
@@ -47,5 +49,10 @@ ApplicationWindow {
             compenent.sendBroadcastMessage.connect(id_network.sendUdp)      //发送广播消息（群聊）
             compenent.sendP2PMessage.connect(id_network.sendUdp)            //发送端到端消息（私聊）
         }
+    }
+
+    onClosing: {
+        console.log("我要关闭了")
+        id_network.sendUdp(4)
     }
 }

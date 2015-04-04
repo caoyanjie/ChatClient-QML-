@@ -114,7 +114,8 @@ Rectangle {
             }
             ColorDialog {
                 id: id_colorDialog
-                color: "#000040"
+//                color: "#000040"
+                color: "#00ff00"
             }
         }
 

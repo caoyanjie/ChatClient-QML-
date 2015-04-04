@@ -5,7 +5,9 @@ import QtQuick.Window 2.0
 
 Window {
     id: p2pDialog
-    property string destinationIp: chat.destinationIp
+    property string destinationIp
+    property string friendName
+//    property string destinationIp: chat.destinationIp
     signal sendP2PMessage(string destinationIp, string chatContent)
 
     visible: true
@@ -34,19 +36,16 @@ Window {
         Image {
             id: background
             anchors.fill: parent
-            source: "Img/Images/background.png"
+            source: "Img/Images/background2.png"
         }
 
         WindowTitle {
             id: id_windowTitle
             Text {
                 id: windowState
-                text: "当前无对话"
+                text: "与 " + friendName  + " 的对话"
                 color: "white"
-                anchors { verticalCenter: parent.verticalCenter }
-                Component.onCompleted: {
-                    windowState.x = id_containerLeft.x + (windowState.width - id_containerLeft.width)
-                }
+                anchors.centerIn: parent
             }
         }
 
@@ -56,7 +55,7 @@ Window {
             destinationIp: p2pDialog.destinationIp
 
             onSendP2PMessage: {
-                sendP2PMessage(ip, msg)
+                p2pDialog.sendP2PMessage(ip, msg)
             }
         }
     }

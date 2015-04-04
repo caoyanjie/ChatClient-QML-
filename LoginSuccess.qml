@@ -1,10 +1,11 @@
 import QtQuick 2.0
 import QtCPlusPlus.Network 1.0
+//import "JavaScript/ManipulateMessage.js" as ManipulateMessage
 
 Item {
     id: id_root
 
-    signal onlineNotifyP2P(string noticeContent, string destinationIp)
+    signal onlineNotifyP2P(string noticeContent, string chatContent, string destinationIp)
     signal sendBroadcastMessage(int type, string msgContent)
     signal sendP2PMessage(int type, string msgContent, string destinationIp)
     signal showMessageToScreen(string chatContent)
@@ -13,33 +14,57 @@ Item {
 
     //处理接收的消息[类型 + ip + userName + chatContent]
     function processMessage(message) {
-        var type = message[0]
-        var userIp = message[1]
-        var userName = message[2]
-        var chatContent = message[3]
-        var time = message[4]
-
-        //检测到是在线用户，显示消息
-        for (var index=0; index<id_userList.modelCount; ++index) {
-            if (userIp === id_userList.getUserListIp(index)) {
-                if (chatContent == null || chatContent == "") {
-                    return
-                }
-                else {
-                    id_containerLeft.showMessage(userName, chatContent, time)
-                    return
-                }
-            }
+        //枚举消息类型
+        var MessageType = {
+            NewParticipant: "0",        //新用户上线
+            Reply: "1",                 //回复新用户
+            NewMessage: "2",            //消息
+            FileName: "3",              //传送文件名
+            Refuse: "4",                //拒绝接收文件
+            ParticipantLeft: "5"        //用户下线
         }
 
-        //发现新用户，添加到在线列表，并给新用户一个回馈
-        id_userList.addUserToOnlineList(userName, userIp)       //将新上线用户添加到 ListView 列表
-        onlineNotifyP2P(1, "", userIp)
+        //接收消息
+        var type = message[0]
+        var srcIp = message[1]
+        var destinationIP = [2]
+        var userName = message[3]
+        var chatContent = message[4]
+        var time = message[5]
+console.log(message)
+        //分类处理消息
+        switch (type) {
+        case MessageType.NewParticipant:                                    //新上线用户
+            id_userList.addUserToOnlineList(userName, srcIp)                //将新上线用户添加到 ListView 列表
+            var userMessage = id_userList.getUserListMessage(0)
+            if (srcIp === userMessage[0] || userName === userMessage[1]) {
+                break
+            }
+            onlineNotifyP2P(1, "", srcIp)                                   //并给新用户一个回馈
+            break
+        case MessageType.Reply:                                         //回复新用户
+            id_userList.addUserToOnlineList(userName, srcIp)
+            break
+        case MessageType.NewMessage:                                    //聊天消息（群聊）
+            id_containerLeft.showMessage(userName, chatContent, time)
+            break
+        case MessageType.FileName:                                      //传送文件
+
+            break
+        case MessageType.Refuse:                                        //拒绝接收
+
+            break
+        case MessageType.ParticipantLeft:                               //下线
+            id_userList.userLeft(srcIp, userName)
+            break
+        default:
+            break
+        }
     }
 
     //backgroundImage
     Image {
-        source: "Img/Images/background.png"
+        source: "Img/Images/background2.png"
         anchors.fill: parent
     }
 
@@ -48,11 +73,12 @@ Item {
         id: id_windowTitle
         Text {
             id: windowState
-            text: "当前无对话"
+            text: "聊天室"
             color: "white"
             anchors { verticalCenter: parent.verticalCenter }
             Component.onCompleted: {
-                windowState.x = id_containerLeft.x + (windowState.width - id_containerLeft.width)
+                windowState.x = id_containerLeft.x + id_containerLeft.width
+                console.log(id_containerLeft.width)
             }
         }
     }
@@ -68,7 +94,8 @@ Item {
             height: parent.height
             anchors {left: parent.left; top: parent.top; bottom: parent.bottom; leftMargin: 5; topMargin: 5; bottomMargin: 5; rightMargin: 15}
             onSendBroadcastMessage: {
-                id_root.sendBroadcastMessage(0, msg)
+                id_root.sendBroadcastMessage(2, msg)
+
             }
 //            onSendP2PMessage: {
 //                console.log("我已经发出去了端对端的消息呀")
@@ -80,7 +107,7 @@ Item {
             id: id_userList
             anchors { left: id_containerLeft.right; top: parent.top; bottom: parent.bottom; right: parent.right; leftMargin: 15; topMargin: 5; bottomMargin: 5; rightMargin: 5 }
             onSendP2PMessage: {
-                id_root.sendP2PMessage(0, chatContent, destinationIp)
+                id_root.sendP2PMessage(2, chatContent, destinationIp)
             }
         }
     }

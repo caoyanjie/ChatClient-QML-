@@ -25,18 +25,28 @@ Item {
         else if (true){
                 loginSuccess(userName)
         }
-    }
 
+
+    }
+/*
     //动态背景
     AnimatedImage {
         anchors.fill: parent
         source: "Img/Images/waterfall.gif"
     }
+*/
+    Image {
+        anchors.fill: parent
+        source: "Img/Images/background1.png"
+
+    }
 
     //半透明底层
     Rectangle {
         anchors.fill: parent
-        color: Qt.rgba(0, 0, 0, 0.4)
+//        color: Qt.rgba(0, 0, 0, 0.4)
+        color: Qt.rgba(0, 0, 0, 0.2)
+
     }
 
     //
@@ -104,11 +114,13 @@ Item {
                 text: "注册"
             }
         }
+    }
 
-        Text {
-            id: loginStatus
-            color: "red"
-        }
+    Text {
+        id: loginStatus
+        color: "red"
+        anchors.horizontalCenter: parent.horizontalCenter
+        y: 65
     }
 }
 

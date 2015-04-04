@@ -13,18 +13,19 @@
         <file>P2PChat.qml</file>
     </qresource>
     <qresource prefix="/Img">
-        <file>Images/background.png</file>
         <file>Images/closeWindow.png</file>
         <file>Images/colorDialog.png</file>
         <file>Images/miniWindow.png</file>
         <file>Images/setWindow.png</file>
         <file>Images/logo.png</file>
         <file>Images/waterfall.gif</file>
-        <file>Images/manLogo.png</file>
-        <file>Images/womanLogo.png</file>
-        <file>Images/manLogo1.png</file>
-        <file>Images/manLogo2.png</file>
-        <file>Images/manLogo3.png</file>
         <file>Images/manLogo4.png</file>
+        <file>Images/background1.png</file>
+        <file>Images/background4.jpg</file>
+        <file>Images/background5.jpg</file>
+        <file>Images/background8.jpg</file>
+        <file>Images/background11.jpg</file>
+        <file>Images/background13.png</file>
+        <file>Images/background2.png</file>
     </qresource>
 </RCC>

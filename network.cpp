@@ -33,18 +33,16 @@ void Network::sendUdp(int messageType, QString chatContent, QString destinationI
     if (destinationIp.isEmpty())
     {
         destinationAddress = QHostAddress::Broadcast;
-        qDebug() << "现在发送的是广播" << chatContent;
     }
     else
     {
         destinationAddress.setAddress(destinationIp);
-        qDebug() << tr("现在发送的是P2P<%1>: %2").arg(destinationIp).arg(chatContent);
     }
 
-    //构造数据[类型，IP，字符串]
+    //构造数据[类型，源IP，目的IP，用户名，消息内容]
     QByteArray datagram;
     QDataStream out(&datagram, QIODevice::WriteOnly);
-    out << messageType << myIp << myUserName << chatContent;
+    out << messageType << myIp << destinationAddress.toString() << myUserName << chatContent;
 
     udpManager->writeDatagram(datagram, datagram.length(), destinationAddress, udpPort);
 }
@@ -70,7 +68,8 @@ void Network::receiveUdpDatagram()
     while (udpManager->hasPendingDatagrams())
     {
         int messageType;
-        QString ip;
+        QString srcIp;
+        QString destinationIp;
         QString userName;
         QString chatContent;
 
@@ -79,17 +78,18 @@ void Network::receiveUdpDatagram()
         udpManager->readDatagram(datagram.data(), datagram.size());
 
         QDataStream in(&datagram, QIODevice::ReadOnly);
-        in >> messageType >> ip >> userName >> chatContent;
+        in >> messageType >> srcIp >> destinationIp >> userName >> chatContent;
 
         QString time = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
 
         QStringList udpData;
         udpData.append(tr("%1").arg(messageType));      //类型
-        udpData.append(ip);                             //ip
+        udpData.append(srcIp);                          //源IP
+        udpData.append(destinationIp);                  //目的IP
         udpData.append(userName);                       //userName
         udpData.append(chatContent);                    //chatContent
         udpData.append(time);                           //系统时间
 
-        emit receivedMessage(udpData);                   //发送 [类型 + ip + userName + chatContent] 信号
+        emit receivedMessage(udpData);                  //发送 [类型+源IP+目的IP+用户名+消息内容] 信号
     }    
 }
