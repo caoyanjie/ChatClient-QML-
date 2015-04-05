@@ -5,7 +5,9 @@ import QtCPlusPlus.Network 1.0
 Item {
     id: id_root
 
-    signal onlineNotifyP2P(string noticeContent, string chatContent, string destinationIp)
+    property bool privateChatWindowExist: false         //私聊窗口是否已存在
+
+    signal sendUdpMessage(int messageType, string chatContent, string destinationIp)
     signal sendBroadcastMessage(int type, string msgContent)
     signal sendP2PMessage(int type, string msgContent, string destinationIp)
     signal showMessageToScreen(string chatContent)
@@ -17,44 +19,51 @@ Item {
         //枚举消息类型
         var MessageType = {
             NewParticipant: "0",        //新用户上线
-            Reply: "1",                 //回复新用户
-            NewMessage: "2",            //消息
-            FileName: "3",              //传送文件名
-            Refuse: "4",                //拒绝接收文件
-            ParticipantLeft: "5"        //用户下线
+            NewMessage: "1",            //消息
+            FileName: "2",              //传送文件名
+            Refuse: "3",                //拒绝接收文件
+            ParticipantLeft: "4"        //用户下线
         }
 
         //接收消息
         var type = message[0]
         var srcIp = message[1]
-        var destinationIP = [2]
+        var destinationIP = message[2]
         var userName = message[3]
         var chatContent = message[4]
         var time = message[5]
-console.log(message)
+
         //分类处理消息
         switch (type) {
         case MessageType.NewParticipant:                                    //新上线用户
-            id_userList.addUserToOnlineList(userName, srcIp)                //将新上线用户添加到 ListView 列表
-            var userMessage = id_userList.getUserListMessage(0)
-            if (srcIp === userMessage[0] || userName === userMessage[1]) {
+            if (srcIp === destinationIP) {                                  //如果是自己给自己发的，就不再重复添加上线用户
                 break
             }
-            onlineNotifyP2P(1, "", srcIp)                                   //并给新用户一个回馈
+            id_userList.addUserToOnlineList(userName, srcIp)                //将新上线用户添加到 ListView 列表
+            if (destinationIP === "255.255.255.255") {                      //如果收到的是广播
+//                if (srcIp !== myIp) {                                     //如果源IP不是自己的IP
+                    sendUdpMessage(0, "5", srcIp)                           //给新用户一个回馈
+//                }
+            }
             break
-        case MessageType.Reply:                                         //回复新用户
-            id_userList.addUserToOnlineList(userName, srcIp)
+        case MessageType.NewMessage:                                        //聊天消息
+            if (destinationIP === "255.255.255.255") {                      //如果是群聊
+                id_containerLeft.showMessage(userName, chatContent, time)   //显示在聊天室窗口
+            }
+            else if (privateChatWindowExist) {                              //如果是私聊（私聊窗口已经打开）
+                                                                            //显示在私聊窗口
+            }
+            else {                                                          //如果是私聊（私聊窗口未打开）
+                messageTwinkle(srcIp, userName)                             //消息闪烁
+            }
             break
-        case MessageType.NewMessage:                                    //聊天消息（群聊）
-            id_containerLeft.showMessage(userName, chatContent, time)
-            break
-        case MessageType.FileName:                                      //传送文件
+        case MessageType.FileName:                                          //传送文件
 
             break
-        case MessageType.Refuse:                                        //拒绝接收
+        case MessageType.Refuse:                                            //拒绝接收
 
             break
-        case MessageType.ParticipantLeft:                               //下线
+        case MessageType.ParticipantLeft:                                   //下线
             id_userList.userLeft(srcIp, userName)
             break
         default:
@@ -78,7 +87,6 @@ console.log(message)
             anchors { verticalCenter: parent.verticalCenter }
             Component.onCompleted: {
                 windowState.x = id_containerLeft.x + id_containerLeft.width
-                console.log(id_containerLeft.width)
             }
         }
     }

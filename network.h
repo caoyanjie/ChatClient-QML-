@@ -8,7 +8,6 @@
 //枚举：发送数据的类型
 typedef enum MessageType {
     NewParticipant,         //新用户上线
-    Reply,                  //回复新用户
     Message,                //消息
     FileName,               //传送文件名
     Refuse,                 //拒绝接收文件

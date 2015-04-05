@@ -8,7 +8,7 @@ Rectangle {
     signal miniWindow
     signal setWindow
 
-    onCloseWindow:  root.close()
+    onCloseWindow:  close()
     onMiniWindow: root.showMinimized()
 
     color: Qt.rgba(0, 0, 0, 0.5)
